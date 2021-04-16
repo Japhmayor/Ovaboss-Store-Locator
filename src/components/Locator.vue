@@ -57,7 +57,7 @@
       </div>
       <div class="items">
         <div class="box" v-for="d in data.result" :key="d.center_id">
-          <img src="/images/setup.jpg" alt="" />
+          <img :src="d.image" alt="" />
           <div class="inner-box mt-3">
             <div>
               <h4 class="text-secondary">{{ d.name }}</h4>
@@ -97,7 +97,7 @@ export default {
       community: "",
       data: [],
       empty: false,
-      searchCount: 0,
+      searchCount: "",
       AllRepCenters: "https://ovaboss-ems.dev.i.ng/api/rep_centres/all",
     };
   },
@@ -128,20 +128,23 @@ export default {
         //   "https://ovaboss-ems.dev.i.ng/api/rep_centres/locate/Nigeria/Lagos/Lagos/Surulere",
       })
         .then((response) => {
-          this.loading = true;
-          this.data = response.data;
-          this.searchCount = this.data.result.length;
-          if (response.data.result == "") {
-            this.loading = false;
-            this.empty = true;
-          } else if (
+          if (
             this.country == "" &&
             this.state == "" &&
             this.city == "" &&
             this.community == ""
           ) {
-            alert("Provide a country, state, or city for us to search");
+            alert("country parameter is required.");
+            this.searchCount = 0;
           }
+          this.loading = true;
+          this.data = response.data;
+          this.searchCount = this.data.result.length;
+          if (this.data.result == "") {
+            this.loading = false;
+            this.empty = true;
+          }
+
           this.loading = false;
         })
         .catch((error) => {

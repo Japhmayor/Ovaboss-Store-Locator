@@ -8,7 +8,7 @@
 
 <script>
 // import HelloWorld from "./components/HelloWorld.vue";
-import Locator from "./components/Locator.vue";
+import Locator from "./components/Loc.vue";
 
 export default {
   name: "App",
